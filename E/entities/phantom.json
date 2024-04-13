@@ -1,0 +1,479 @@
+//bridge-file-version: #2
+{
+	"format_version": "1.13.0",
+	"minecraft:entity": {
+		"description": {
+			"identifier": "minecraft:phantom",
+			"is_spawnable": true,
+			"is_summonable": true,
+			"is_experimental": false
+		},
+		"components": {
+			"minecraft:experience_reward": {
+				"on_death": "query.last_hit_by_player ? 5 : 0"
+			},
+			"minecraft:type_family": {
+				"family": [
+					"phantom",
+					"undead",
+					"monster",
+					"mob"
+				]
+			},
+			"minecraft:loot": {
+				"table": "loot_tables/entities/phantom.json"
+			},
+			"minecraft:nameable": {},
+			"minecraft:health": {
+				"value": 20,
+				"max": 20
+			},
+			"minecraft:hurt_on_condition": {
+				"damage_conditions": [
+					{
+						"filters": {
+							"test": "in_lava",
+							"subject": "self",
+							"operator": "==",
+							"value": true
+						},
+						"cause": "lava",
+						"damage_per_tick": 4
+					}
+				]
+			},
+			"minecraft:physics": {
+				"has_gravity": false
+			},
+			"minecraft:pushable": {
+				"is_pushable": true,
+				"is_pushable_by_piston": true
+			},
+			"minecraft:attack": {
+				"damage": 6
+			},
+			"minecraft:breathable": {
+				"total_supply": 15,
+				"suffocate_time": 0,
+				"breathes_air": true,
+				"breathes_water": false
+			},
+			"minecraft:collision_box": {
+				"width": 0.9,
+				"height": 0.5
+			},
+			"minecraft:movement": {
+				"value": 1.8
+			},
+			"minecraft:movement.glide": {
+				"start_speed": 0.1,
+				"speed_when_turning": 0.2
+			},
+			"minecraft:burns_in_daylight": {},
+			"minecraft:follow_range": {
+				"value": 64,
+				"max": 64
+			},
+			"minecraft:behavior.avoid_mob_type": {
+				"priority": 0,
+				"max_dist": 16,
+				"ignore_visibility": true,
+				"entity_types": [
+					{
+						"filters": {
+							"any_of": [
+								{
+									"test": "is_family",
+									"subject": "other",
+									"value": "ocelot"
+								},
+								{
+									"test": "is_family",
+									"subject": "other",
+									"value": "cat"
+								}
+							]
+						},
+						"max_dist": 16,
+						"walk_speed_multiplier": 1,
+						"sprint_speed_multiplier": 1
+					}
+				]
+			},
+			"minecraft:behavior.nearest_attackable_target": {
+				"priority": 1,
+				"within_radius": 70,
+				"reselect_targets": true,
+				"entity_types": [
+					{
+						"filters": {
+							"test": "is_family",
+							"subject": "other",
+							"value": "player"
+						},
+						"max_dist": 64
+					},
+					{
+						"filters": {
+							"any_of": [
+								{
+									"all_of": [
+										{
+											"test": "is_skin_id",
+											"subject": "self",
+											"value": 1
+										},
+										{
+											"test": "is_skin_id",
+											"subject": "other",
+											"value": 1,
+											"operator": "!="
+										},
+										{
+											"test": "is_skin_id",
+											"subject": "other",
+											"operator": "!=",
+											"value": 0
+										}
+									]
+								},
+								{
+									"all_of": [
+										{
+											"test": "is_skin_id",
+											"subject": "self",
+											"value": 2
+										},
+										{
+											"test": "is_skin_id",
+											"subject": "other",
+											"value": 2,
+											"operator": "!="
+										},
+										{
+											"test": "is_skin_id",
+											"subject": "other",
+											"operator": "!=",
+											"value": 0
+										}
+									]
+								},
+								{
+									"all_of": [
+										{
+											"test": "is_skin_id",
+											"subject": "self",
+											"value": 3
+										},
+										{
+											"test": "is_skin_id",
+											"subject": "other",
+											"value": 3,
+											"operator": "!="
+										},
+										{
+											"test": "is_skin_id",
+											"subject": "other",
+											"operator": "!=",
+											"value": 0
+										}
+									]
+								},
+								{
+									"all_of": [
+										{
+											"test": "is_skin_id",
+											"subject": "self",
+											"value": 4
+										},
+										{
+											"test": "is_skin_id",
+											"subject": "other",
+											"value": 4,
+											"operator": "!="
+										},
+										{
+											"test": "is_skin_id",
+											"subject": "other",
+											"operator": "!=",
+											"value": 0
+										}
+									]
+								}
+							]
+						},
+						"max_dist": 70,
+						"must_see": false
+					}
+				],
+				"must_see": false,
+				"must_see_forget_duration": 0.5,
+				"scan_interval": 20,
+				"target_search_height": 80
+			},
+			"minecraft:behavior.swoop_attack": {
+				"priority": 2,
+				"delay_range": [
+					10,
+					20
+				]
+			},
+			"minecraft:behavior.circle_around_anchor": {
+				"priority": 3,
+				"radius_range": [
+					5,
+					15
+				],
+				"radius_change_chance": 250,
+				"height_above_target_range": [
+					20,
+					40
+				],
+				"height_offset_range": [
+					-4,
+					5
+				],
+				"height_change_chance": 350,
+				"goal_radius": 1
+			},
+			"minecraft:damage_sensor": {
+				"triggers": [
+					{
+						"on_damage": {
+							"filters": {
+								"any_of": [
+									{
+										"all_of": [
+											{
+												"test": "is_skin_id",
+												"subject": "other",
+												"value": 1
+											},
+											{
+												"test": "is_skin_id",
+												"subject": "self",
+												"value": 1
+											}
+										]
+									},
+									{
+										"all_of": [
+											{
+												"test": "is_skin_id",
+												"subject": "other",
+												"value": 2
+											},
+											{
+												"test": "is_skin_id",
+												"subject": "self",
+												"value": 2
+											}
+										]
+									},
+									{
+										"all_of": [
+											{
+												"test": "is_skin_id",
+												"subject": "other",
+												"value": 3
+											},
+											{
+												"test": "is_skin_id",
+												"subject": "self",
+												"value": 3
+											}
+										]
+									},
+									{
+										"all_of": [
+											{
+												"test": "is_skin_id",
+												"subject": "other",
+												"value": 4
+											},
+											{
+												"test": "is_skin_id",
+												"subject": "self",
+												"value": 4
+											}
+										]
+									}
+								]
+							}
+						},
+						"deals_damage": false
+					},
+					{
+						"on_damage": {
+							"filters": {
+								"test": "has_equipment",
+								"subject": "other",
+								"value": "minecraft:wool:14"
+							},
+							"event": "red"
+						},
+						"deals_damage": false
+					},
+					{
+						"on_damage": {
+							"filters": {
+								"test": "has_equipment",
+								"subject": "other",
+								"value": "minecraft:wool:11"
+							},
+							"event": "blue"
+						},
+						"deals_damage": false
+					},
+					{
+						"on_damage": {
+							"filters": {
+								"test": "has_equipment",
+								"subject": "other",
+								"value": "minecraft:wool:4"
+							},
+							"event": "yellow"
+						},
+						"deals_damage": false
+					},
+					{
+						"on_damage": {
+							"filters": {
+								"test": "has_equipment",
+								"subject": "other",
+								"value": "minecraft:wool:13"
+							},
+							"event": "green"
+						},
+						"deals_damage": false
+					}
+				]
+			},
+			"minecraft:environment_sensor": {
+				"triggers": [
+					{
+						"filters": {
+							"test": "has_tag",
+							"subject": "self",
+							"value": "red"
+						},
+						"event": "red"
+					},
+					{
+						"filters": {
+							"test": "has_tag",
+							"value": "blue"
+						},
+						"event": "blue"
+					},
+					{
+						"filters": {
+							"test": "has_tag",
+							"value": "yellow"
+						},
+						"event": "yellow"
+					},
+					{
+						"filters": {
+							"test": "has_tag",
+							"value": "green"
+						},
+						"event": "green"
+					}
+				]
+			}
+		},
+		"events": {
+			"minecraft:entity_spawned": {
+				"add": {
+					"component_groups": [
+						"none"
+					]
+				}
+			},
+			"red": {
+				"add": {
+					"component_groups": [
+						"red"
+					]
+				},
+				"remove": {
+					"component_groups": [
+						"blue",
+						"yellow",
+						"green"
+					]
+				}
+			},
+			"blue": {
+				"add": {
+					"component_groups": [
+						"blue"
+					]
+				},
+				"remove": {
+					"component_groups": [
+						"red",
+						"yellow",
+						"green"
+					]
+				}
+			},
+			"yellow": {
+				"add": {
+					"component_groups": [
+						"yellow"
+					]
+				},
+				"remove": {
+					"component_groups": [
+						"red",
+						"blue",
+						"green"
+					]
+				}
+			},
+			"green": {
+				"add": {
+					"component_groups": [
+						"green"
+					]
+				},
+				"remove": {
+					"component_groups": [
+						"red",
+						"blue",
+						"yellow"
+					]
+				}
+			}
+		},
+		"component_groups": {
+			"red": {
+				"minecraft:skin_id": {
+					"value": 1
+				}
+			},
+			"blue": {
+				"minecraft:skin_id": {
+					"value": 2
+				}
+			},
+			"yellow": {
+				"minecraft:skin_id": {
+					"value": 3
+				}
+			},
+			"green": {
+				"minecraft:skin_id": {
+					"value": 4
+				}
+			},
+			"none": {
+				"minecraft:skin_id": {
+					"value": 0
+				}
+			}
+		}
+	}
+}

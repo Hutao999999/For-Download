@@ -1,0 +1,50 @@
+{
+  "format_version": 2,
+  "header": {
+    "name": "§l§7|| §aWarps §7||",
+    "description": "§l§eBy 胡桃",
+    "uuid": "5d204266-c417-0394-5d75-c4ef3af6e195",
+    "version": [
+      1,
+      0,
+      0
+    ],
+    "min_engine_version": [
+      1,
+      20,
+      70
+    ]
+  },
+  "modules": [
+    {
+      "type": "data",
+      "uuid": "421ecdfa-2333-a373-dc52-63830096cd2f",
+      "version": [
+        1,
+        0,
+        0
+      ]
+    },
+    {
+      "type": "script",
+      "language": "javascript",
+      "uuid": "3f69d7f9-f685-2323-2bf2-7872ec52a9f5",
+      "version": [
+        1,
+        0,
+        0
+      ],
+      "entry": "scripts/main.js"
+    }
+  ],
+  "dependencies": [
+    {
+      "module_name": "@minecraft/server",
+      "version": "1.10.0-beta"
+    },
+    {
+      "module_name": "@minecraft/server-ui",
+      "version": "1.2.0-beta"
+    }
+  ]
+}

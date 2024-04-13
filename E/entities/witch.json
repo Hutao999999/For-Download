@@ -1,0 +1,525 @@
+//bridge-file-version: #1
+{
+	"format_version": "1.13.0",
+	"minecraft:entity": {
+		"description": {
+			"identifier": "minecraft:witch",
+			"is_spawnable": true,
+			"is_summonable": true,
+			"is_experimental": false
+		},
+		"component_groups": {
+			"minecraft:celebrate": {
+				"minecraft:behavior.celebrate": {
+					"priority": 5,
+					"celebration_sound": "celebrate",
+					"sound_interval": {
+						"range_min": 2,
+						"range_max": 7
+					},
+					"jump_interval": {
+						"range_min": 1,
+						"range_max": 3.5
+					},
+					"duration": 30,
+					"on_celebration_end_event": {
+						"event": "minecraft:stop_celebrating",
+						"target": "self"
+					}
+				}
+			},
+			"minecraft:raid_configuration": {
+				"minecraft:dweller": {
+					"dwelling_type": "village",
+					"dweller_role": "hostile",
+					"update_interval_base": 60,
+					"update_interval_variant": 40,
+					"can_find_poi": false,
+					"can_migrate": false,
+					"first_founding_reward": 0
+				},
+				"minecraft:behavior.move_to_village": {
+					"priority": 3,
+					"speed_multiplier": 1.2,
+					"goal_radius": 2
+				},
+				"minecraft:ambient_sound_interval": {
+					"value": 2,
+					"range": 4,
+					"event_name": "ambient.in.raid"
+				}
+			},
+			"red": {
+				"minecraft:skin_id": {
+					"value": 1
+				}
+			},
+			"blue": {
+				"minecraft:skin_id": {
+					"value": 2
+				}
+			},
+			"yellow": {
+				"minecraft:skin_id": {
+					"value": 3
+				}
+			},
+			"green": {
+				"minecraft:skin_id": {
+					"value": 4
+				}
+			},
+			"none": {
+				"minecraft:skin_id": {
+					"value": 0
+				}
+			}
+		},
+		"components": {
+			"minecraft:experience_reward": {
+				"on_death": "query.last_hit_by_player ? (query.is_baby ? 12 : 5) + (Math.die_roll(query.equipment_count,1,3)) : 0"
+			},
+			"minecraft:breathable": {
+				"total_supply": 15,
+				"suffocate_time": 0
+			},
+			"minecraft:nameable": {},
+			"minecraft:loot": {
+				"table": "loot_tables/entities/witch.json"
+			},
+			"minecraft:health": {
+				"value": 26,
+				"max": 26
+			},
+			"minecraft:hurt_on_condition": {
+				"damage_conditions": [
+					{
+						"filters": {
+							"test": "in_lava",
+							"subject": "self",
+							"operator": "==",
+							"value": true
+						},
+						"cause": "lava",
+						"damage_per_tick": 4
+					}
+				]
+			},
+			"minecraft:movement": {
+				"value": 0.25
+			},
+			"minecraft:navigation.walk": {
+				"can_path_over_water": true,
+				"avoid_water": false
+			},
+			"minecraft:movement.basic": {},
+			"minecraft:jump.static": {},
+			"minecraft:can_climb": {},
+			"minecraft:behavior.float": {
+				"priority": 1
+			},
+			"minecraft:behavior.ranged_attack": {
+				"priority": 2,
+				"speed_multiplier": 1,
+				"attack_interval_min": 3,
+				"attack_interval_max": 3,
+				"attack_radius": 10
+			},
+			"minecraft:behavior.random_stroll": {
+				"priority": 4,
+				"speed_multiplier": 1
+			},
+			"minecraft:behavior.look_at_player": {
+				"priority": 5,
+				"look_distance": 8
+			},
+			"minecraft:behavior.random_look_around": {
+				"priority": 5,
+				"look_distance": 8
+			},
+			"minecraft:behavior.hurt_by_target": {
+				"priority": 1
+			},
+			"minecraft:behavior.nearest_attackable_target": {
+				"priority": 2,
+				"entity_types": [
+					{
+						"filters": {
+							"all_of": [
+								{
+									"any_of": [
+										{
+											"test": "is_family",
+											"subject": "other",
+											"value": "player"
+										},
+										{
+											"test": "is_family",
+											"subject": "other",
+											"value": "snowgolem"
+										},
+										{
+											"test": "is_family",
+											"subject": "other",
+											"value": "irongolem"
+										}
+									]
+								},
+								{
+									"test": "is_skin_id",
+									"subject": "self",
+									"value": 0
+								}
+							]
+						},
+						"max_dist": 10,
+						"must_see": true
+					},
+					{
+						"filters": {
+							"any_of": [
+								{
+									"all_of": [
+										{
+											"test": "is_skin_id",
+											"subject": "self",
+											"value": 1
+										},
+										{
+											"test": "is_skin_id",
+											"subject": "other",
+											"value": 1,
+											"operator": "!="
+										},
+										{
+											"test": "is_skin_id",
+											"subject": "other",
+											"operator": "!=",
+											"value": 0
+										}
+									]
+								},
+								{
+									"all_of": [
+										{
+											"test": "is_skin_id",
+											"subject": "self",
+											"value": 2
+										},
+										{
+											"test": "is_skin_id",
+											"subject": "other",
+											"value": 2,
+											"operator": "!="
+										},
+										{
+											"test": "is_skin_id",
+											"subject": "other",
+											"operator": "!=",
+											"value": 0
+										}
+									]
+								},
+								{
+									"all_of": [
+										{
+											"test": "is_skin_id",
+											"subject": "self",
+											"value": 3
+										},
+										{
+											"test": "is_skin_id",
+											"subject": "other",
+											"value": 3,
+											"operator": "!="
+										},
+										{
+											"test": "is_skin_id",
+											"subject": "other",
+											"operator": "!=",
+											"value": 0
+										}
+									]
+								},
+								{
+									"all_of": [
+										{
+											"test": "is_skin_id",
+											"subject": "self",
+											"value": 4
+										},
+										{
+											"test": "is_skin_id",
+											"subject": "other",
+											"value": 4,
+											"operator": "!="
+										},
+										{
+											"test": "is_skin_id",
+											"subject": "other",
+											"operator": "!=",
+											"value": 0
+										}
+									]
+								}
+							]
+						},
+						"max_dist": 35,
+						"must_see": false
+					}
+				]
+			},
+			"minecraft:type_family": {
+				"family": [
+					"witch",
+					"monster",
+					"mob"
+				]
+			},
+			"minecraft:collision_box": {
+				"width": 0.6,
+				"height": 1.9
+			},
+			"minecraft:physics": {},
+			"minecraft:pushable": {
+				"is_pushable": true,
+				"is_pushable_by_piston": true
+			},
+			"minecraft:follow_range": {
+				"value": 64
+			},
+			"minecraft:damage_sensor": {
+				"triggers": [
+					{
+						"on_damage": {
+							"filters": {
+								"any_of": [
+									{
+										"all_of": [
+											{
+												"test": "is_skin_id",
+												"subject": "other",
+												"value": 1
+											},
+											{
+												"test": "is_skin_id",
+												"subject": "self",
+												"value": 1
+											}
+										]
+									},
+									{
+										"all_of": [
+											{
+												"test": "is_skin_id",
+												"subject": "other",
+												"value": 2
+											},
+											{
+												"test": "is_skin_id",
+												"subject": "self",
+												"value": 2
+											}
+										]
+									},
+									{
+										"all_of": [
+											{
+												"test": "is_skin_id",
+												"subject": "other",
+												"value": 3
+											},
+											{
+												"test": "is_skin_id",
+												"subject": "self",
+												"value": 3
+											}
+										]
+									},
+									{
+										"all_of": [
+											{
+												"test": "is_skin_id",
+												"subject": "other",
+												"value": 4
+											},
+											{
+												"test": "is_skin_id",
+												"subject": "self",
+												"value": 4
+											}
+										]
+									}
+								]
+							}
+						},
+						"deals_damage": false
+					},
+					{
+						"on_damage": {
+							"filters": {
+								"test": "has_equipment",
+								"subject": "other",
+								"value": "minecraft:wool:14"
+							},
+							"event": "red"
+						},
+						"deals_damage": false
+					},
+					{
+						"on_damage": {
+							"filters": {
+								"test": "has_equipment",
+								"subject": "other",
+								"value": "minecraft:wool:11"
+							},
+							"event": "blue"
+						},
+						"deals_damage": false
+					},
+					{
+						"on_damage": {
+							"filters": {
+								"test": "has_equipment",
+								"subject": "other",
+								"value": "minecraft:wool:4"
+							},
+							"event": "yellow"
+						},
+						"deals_damage": false
+					},
+					{
+						"on_damage": {
+							"filters": {
+								"test": "has_equipment",
+								"subject": "other",
+								"value": "minecraft:wool:13"
+							},
+							"event": "green"
+						},
+						"deals_damage": false
+					}
+				]
+			},
+			"minecraft:environment_sensor": {
+				"triggers": [
+					{
+						"filters": {
+							"test": "has_tag",
+							"subject": "self",
+							"value": "red"
+						},
+						"event": "red"
+					},
+					{
+						"filters": {
+							"test": "has_tag",
+							"value": "blue"
+						},
+						"event": "blue"
+					},
+					{
+						"filters": {
+							"test": "has_tag",
+							"value": "yellow"
+						},
+						"event": "yellow"
+					},
+					{
+						"filters": {
+							"test": "has_tag",
+							"value": "green"
+						},
+						"event": "green"
+					}
+				]
+			}
+		},
+		"events": {
+			"minecraft:spawn_for_raid": {
+				"add": {
+					"component_groups": [
+						"minecraft:raid_configuration"
+					]
+				}
+			},
+			"minecraft:start_celebrating": {
+				"add": {
+					"component_groups": [
+						"minecraft:celebrate"
+					]
+				}
+			},
+			"minecraft:entity_spawned": {
+				"add": {
+					"component_groups": [
+						"none"
+					]
+				}
+			},
+			"red": {
+				"add": {
+					"component_groups": [
+						"red"
+					]
+				},
+				"remove": {
+					"component_groups": [
+						"blue",
+						"yellow",
+						"green"
+					]
+				}
+			},
+			"blue": {
+				"add": {
+					"component_groups": [
+						"blue"
+					]
+				},
+				"remove": {
+					"component_groups": [
+						"red",
+						"yellow",
+						"green"
+					]
+				}
+			},
+			"yellow": {
+				"add": {
+					"component_groups": [
+						"yellow"
+					]
+				},
+				"remove": {
+					"component_groups": [
+						"red",
+						"blue",
+						"green"
+					]
+				}
+			},
+			"green": {
+				"add": {
+					"component_groups": [
+						"green"
+					]
+				},
+				"remove": {
+					"component_groups": [
+						"red",
+						"blue",
+						"yellow"
+					]
+				}
+			},
+			"minecraft:stop_celebrating": {
+				"remove": {
+					"component_groups": [
+						"minecraft:celebrate"
+					]
+				}
+			}
+		}
+	}
+}

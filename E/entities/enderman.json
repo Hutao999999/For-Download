@@ -1,0 +1,638 @@
+//bridge-file-version: #1
+{
+	"format_version": "1.13.0",
+	"minecraft:entity": {
+		"description": {
+			"identifier": "minecraft:enderman",
+			"is_spawnable": true,
+			"is_summonable": true,
+			"is_experimental": false
+		},
+		"component_groups": {
+			"minecraft:enderman_calm": {
+				"minecraft:on_target_acquired": {
+					"event": "minecraft:become_angry",
+					"target": "self"
+				},
+				"minecraft:movement": {
+					"value": 0.3
+				}
+			},
+			"minecraft:enderman_angry": {
+				"minecraft:angry": {
+					"duration": 25,
+					"calm_event": {
+						"event": "minecraft:on_calm",
+						"target": "self"
+					}
+				},
+				"minecraft:movement": {
+					"value": 0.45
+				},
+				"minecraft:behavior.melee_attack": {
+					"priority": 2,
+					"speed_multiplier": 1,
+					"track_target": false
+				}
+			},
+			"red": {
+				"minecraft:skin_id": {
+					"value": 1
+				}
+			},
+			"blue": {
+				"minecraft:skin_id": {
+					"value": 2
+				}
+			},
+			"yellow": {
+				"minecraft:skin_id": {
+					"value": 3
+				}
+			},
+			"green": {
+				"minecraft:skin_id": {
+					"value": 4
+				}
+			},
+			"none": {
+				"minecraft:skin_id": {
+					"value": 0
+				}
+			}
+		},
+		"components": {
+			"minecraft:experience_reward": {
+				"on_death": "query.last_hit_by_player ? 5 : 0"
+			},
+			"minecraft:type_family": {
+				"family": [
+					"enderman",
+					"monster",
+					"mob"
+				]
+			},
+			"minecraft:breathable": {
+				"total_supply": 15,
+				"suffocate_time": 0
+			},
+			"minecraft:nameable": {},
+			"minecraft:loot": {
+				"table": "loot_tables/entities/enderman.json"
+			},
+			"minecraft:health": {
+				"value": 40,
+				"max": 40
+			},
+			"minecraft:hurt_on_condition": {
+				"damage_conditions": [
+					{
+						"filters": {
+							"test": "in_lava",
+							"subject": "self",
+							"operator": "==",
+							"value": true
+						},
+						"cause": "lava",
+						"damage_per_tick": 4
+					},
+					{
+						"filters": {
+							"test": "in_water_or_rain",
+							"operator": "==",
+							"value": true
+						},
+						"cause": "drowning",
+						"damage_per_tick": 1
+					}
+				]
+			},
+			"minecraft:attack": {
+				"damage": 7
+			},
+			"minecraft:follow_range": {
+				"value": 32,
+				"max": 32
+			},
+			"minecraft:collision_box": {
+				"width": 0.6,
+				"height": 2.9
+			},
+			"minecraft:teleport": {
+				"random_teleports": true,
+				"max_random_teleport_time": 30,
+				"random_teleport_cube": [
+					32,
+					32,
+					32
+				],
+				"target_distance": 16,
+				"target_teleport_chance": 0.05,
+				"light_teleport_chance": 0.05
+			},
+			"minecraft:lookat": {
+				"search_radius": 64,
+				"set_target": true,
+				"look_cooldown": 5,
+				"filters": {
+					"any_of": [
+						{
+							"all_of": [
+								{
+									"subject": "other",
+									"test": "is_family",
+									"value": "player"
+								},
+								{
+									"test": "has_equipment",
+									"domain": "head",
+									"subject": "other",
+									"operator": "not",
+									"value": "carved_pumpkin"
+								},
+								{
+									"test": "is_skin_id",
+									"subject": "self",
+									"value": 0
+								}
+							]
+						},
+						{
+							"all_of": [
+								{
+									"test": "is_skin_id",
+									"subject": "self",
+									"value": 1
+								},
+								{
+									"test": "is_skin_id",
+									"subject": "other",
+									"value": 1,
+									"operator": "!="
+								},
+								{
+									"test": "is_skin_id",
+									"subject": "other",
+									"operator": "!=",
+									"value": 0
+								}
+							]
+						},
+						{
+							"all_of": [
+								{
+									"test": "is_skin_id",
+									"subject": "self",
+									"value": 2
+								},
+								{
+									"test": "is_skin_id",
+									"subject": "other",
+									"value": 2,
+									"operator": "!="
+								},
+								{
+									"test": "is_skin_id",
+									"subject": "other",
+									"operator": "!=",
+									"value": 0
+								}
+							]
+						},
+						{
+							"all_of": [
+								{
+									"test": "is_skin_id",
+									"subject": "self",
+									"value": 3
+								},
+								{
+									"test": "is_skin_id",
+									"subject": "other",
+									"value": 3,
+									"operator": "!="
+								},
+								{
+									"test": "is_skin_id",
+									"subject": "other",
+									"operator": "!=",
+									"value": 0
+								}
+							]
+						},
+						{
+							"all_of": [
+								{
+									"test": "is_skin_id",
+									"subject": "self",
+									"value": 4
+								},
+								{
+									"test": "is_skin_id",
+									"subject": "other",
+									"value": 4,
+									"operator": "!="
+								},
+								{
+									"test": "is_skin_id",
+									"subject": "other",
+									"operator": "!=",
+									"value": 0
+								}
+							]
+						}
+					]
+				}
+			},
+			"minecraft:behavior.nearest_attackable_target": {
+				"priority": 5,
+				"attack_interval": 10,
+				"entity_types": [
+					{
+						"filters": {
+							"all_of": [
+								{
+									"test": "is_family",
+									"subject": "other",
+									"value": "endermite"
+								},
+								{
+									"test": "is_skin_id",
+									"subject": "self",
+									"value": 0
+								}
+							]
+						},
+						"max_dist": 64,
+						"must_see": true
+					},
+					{
+						"filters": {
+							"any_of": [
+								{
+									"all_of": [
+										{
+											"test": "is_skin_id",
+											"subject": "self",
+											"value": 1
+										},
+										{
+											"test": "is_skin_id",
+											"subject": "other",
+											"value": 1,
+											"operator": "!="
+										},
+										{
+											"test": "is_skin_id",
+											"subject": "other",
+											"operator": "!=",
+											"value": 0
+										}
+									]
+								},
+								{
+									"all_of": [
+										{
+											"test": "is_skin_id",
+											"subject": "self",
+											"value": 2
+										},
+										{
+											"test": "is_skin_id",
+											"subject": "other",
+											"value": 2,
+											"operator": "!="
+										},
+										{
+											"test": "is_skin_id",
+											"subject": "other",
+											"operator": "!=",
+											"value": 0
+										}
+									]
+								},
+								{
+									"all_of": [
+										{
+											"test": "is_skin_id",
+											"subject": "self",
+											"value": 3
+										},
+										{
+											"test": "is_skin_id",
+											"subject": "other",
+											"value": 3,
+											"operator": "!="
+										},
+										{
+											"test": "is_skin_id",
+											"subject": "other",
+											"operator": "!=",
+											"value": 0
+										}
+									]
+								},
+								{
+									"all_of": [
+										{
+											"test": "is_skin_id",
+											"subject": "self",
+											"value": 4
+										},
+										{
+											"test": "is_skin_id",
+											"subject": "other",
+											"value": 4,
+											"operator": "!="
+										},
+										{
+											"test": "is_skin_id",
+											"subject": "other",
+											"operator": "!=",
+											"value": 0
+										}
+									]
+								}
+							]
+						},
+						"max_dist": 60,
+						"must_see": false
+					}
+				]
+			},
+			"minecraft:navigation.walk": {
+				"can_path_over_water": false,
+				"avoid_water": true
+			},
+			"minecraft:movement.basic": {},
+			"minecraft:jump.static": {},
+			"minecraft:can_climb": {},
+			"minecraft:behavior.float": {
+				"priority": 0
+			},
+			"minecraft:behavior.random_stroll": {
+				"priority": 7,
+				"speed_multiplier": 1
+			},
+			"minecraft:behavior.look_at_player": {
+				"priority": 8,
+				"look_distance": 8,
+				"probability": 8
+			},
+			"minecraft:behavior.random_look_around": {
+				"priority": 8
+			},
+			"minecraft:behavior.hurt_by_target": {
+				"priority": 3
+			},
+			"minecraft:behavior.enderman_leave_block": {
+				"priority": 10
+			},
+			"minecraft:behavior.enderman_take_block": {
+				"priority": 11
+			},
+			"minecraft:physics": {},
+			"minecraft:pushable": {
+				"is_pushable": true,
+				"is_pushable_by_piston": true
+			},
+			"minecraft:damage_sensor": {
+				"triggers": [
+					{
+						"on_damage": {
+							"filters": {
+								"any_of": [
+									{
+										"all_of": [
+											{
+												"test": "is_skin_id",
+												"subject": "other",
+												"value": 1
+											},
+											{
+												"test": "is_skin_id",
+												"subject": "self",
+												"value": 1
+											}
+										]
+									},
+									{
+										"all_of": [
+											{
+												"test": "is_skin_id",
+												"subject": "other",
+												"value": 2
+											},
+											{
+												"test": "is_skin_id",
+												"subject": "self",
+												"value": 2
+											}
+										]
+									},
+									{
+										"all_of": [
+											{
+												"test": "is_skin_id",
+												"subject": "other",
+												"value": 3
+											},
+											{
+												"test": "is_skin_id",
+												"subject": "self",
+												"value": 3
+											}
+										]
+									},
+									{
+										"all_of": [
+											{
+												"test": "is_skin_id",
+												"subject": "other",
+												"value": 4
+											},
+											{
+												"test": "is_skin_id",
+												"subject": "self",
+												"value": 4
+											}
+										]
+									}
+								]
+							}
+						},
+						"deals_damage": false
+					},
+					{
+						"on_damage": {
+							"filters": {
+								"test": "has_equipment",
+								"subject": "other",
+								"value": "minecraft:wool:14"
+							},
+							"event": "red"
+						},
+						"deals_damage": false
+					},
+					{
+						"on_damage": {
+							"filters": {
+								"test": "has_equipment",
+								"subject": "other",
+								"value": "minecraft:wool:11"
+							},
+							"event": "blue"
+						},
+						"deals_damage": false
+					},
+					{
+						"on_damage": {
+							"filters": {
+								"test": "has_equipment",
+								"subject": "other",
+								"value": "minecraft:wool:4"
+							},
+							"event": "yellow"
+						},
+						"deals_damage": false
+					},
+					{
+						"on_damage": {
+							"filters": {
+								"test": "has_equipment",
+								"subject": "other",
+								"value": "minecraft:wool:13"
+							},
+							"event": "green"
+						},
+						"deals_damage": false
+					}
+				]
+			},
+			"minecraft:environment_sensor": {
+				"triggers": [
+					{
+						"filters": {
+							"test": "has_tag",
+							"subject": "self",
+							"value": "red"
+						},
+						"event": "red"
+					},
+					{
+						"filters": {
+							"test": "has_tag",
+							"value": "blue"
+						},
+						"event": "blue"
+					},
+					{
+						"filters": {
+							"test": "has_tag",
+							"value": "yellow"
+						},
+						"event": "yellow"
+					},
+					{
+						"filters": {
+							"test": "has_tag",
+							"value": "green"
+						},
+						"event": "green"
+					}
+				]
+			}
+		},
+		"events": {
+			"minecraft:entity_spawned": {
+				"remove": {},
+				"add": {
+					"component_groups": [
+						"minecraft:enderman_calm",
+						"none"
+					]
+				}
+			},
+			"minecraft:become_angry": {
+				"remove": {
+					"component_groups": [
+						"minecraft:enderman_calm"
+					]
+				},
+				"add": {
+					"component_groups": [
+						"minecraft:enderman_angry"
+					]
+				}
+			},
+			"minecraft:on_calm": {
+				"remove": {
+					"component_groups": [
+						"minecraft:enderman_angry"
+					]
+				},
+				"add": {
+					"component_groups": [
+						"minecraft:enderman_calm"
+					]
+				}
+			},
+			"red": {
+				"add": {
+					"component_groups": [
+						"red"
+					]
+				},
+				"remove": {
+					"component_groups": [
+						"blue",
+						"yellow",
+						"green"
+					]
+				}
+			},
+			"blue": {
+				"add": {
+					"component_groups": [
+						"blue"
+					]
+				},
+				"remove": {
+					"component_groups": [
+						"red",
+						"yellow",
+						"green"
+					]
+				}
+			},
+			"yellow": {
+				"add": {
+					"component_groups": [
+						"yellow"
+					]
+				},
+				"remove": {
+					"component_groups": [
+						"red",
+						"blue",
+						"green"
+					]
+				}
+			},
+			"green": {
+				"add": {
+					"component_groups": [
+						"green"
+					]
+				},
+				"remove": {
+					"component_groups": [
+						"red",
+						"blue",
+						"yellow"
+					]
+				}
+			}
+		}
+	}
+}
